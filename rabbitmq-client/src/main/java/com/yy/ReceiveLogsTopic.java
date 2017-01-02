@@ -4,22 +4,22 @@ import com.rabbitmq.client.*;
 
 import java.io.IOException;
 
-public class ReceiveLogsDirect2 {
-    private static final String EXCHANGE_NAME = "direct_logs";
+public class ReceiveLogsTopic {
+    private static final String EXCHANGE_NAME = "topic_logs";
 
     public static void main(String[] argv) throws Exception {
-        argv = new String[]{"info","warning","error"};
+        argv = new String[]{"com.*","*.yy"};
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
-        channel.exchangeDeclare(EXCHANGE_NAME, "direct");
+        channel.exchangeDeclare(EXCHANGE_NAME, "topic");
         String queueName = channel.queueDeclare().getQueue();
         System.out.println("queueName2:"+queueName);
 
         if (argv.length < 1){
-            System.err.println("Usage: ReceiveLogsDirect [info] [warning] [error]");
+            System.err.println("Usage: ReceiveLogsTopic [info] [warning] [error]");
             System.exit(1);
         }
 

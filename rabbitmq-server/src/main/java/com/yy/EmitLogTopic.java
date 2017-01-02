@@ -9,19 +9,19 @@ import java.util.concurrent.TimeoutException;
 /**
  * Created by yaoliang on 2016/12/29.
  */
-public class EmitLogDirect {
+public class EmitLogTopic {
 
-    private static final String EXCHANGE_NAME = "direct_logs";
+    private static final String EXCHANGE_NAME = "topic_logs";
 
     public static void main(String[] argv)
             throws java.io.IOException, TimeoutException {
-        argv = new String[]{"error","Run. Or it will explode."};
+        argv = new String[]{"com.yy","i am coming"};
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
-        channel.exchangeDeclare(EXCHANGE_NAME, "direct");
+        channel.exchangeDeclare(EXCHANGE_NAME, "topic");
 
         String severity = getSeverity(argv);
         String message = getMessage(argv);
